@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Context Handoff: Export a Claude Chat to a Resume Prompt or Markdown (Chrome Extension)</title>
+  <meta name="description" content="Free, open-source Chrome extension that turns a long claude.ai conversation into a compact handoff (goal, latest files, recent turns, next step) so you can continue in a fresh chat. 100% local.">
+  <link rel="canonical" href="https://__OWNER__.github.io/context-handoff/">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#c96442">
+  <link rel="icon" type="image/png" href="icon128.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Context Handoff">
+  <meta property="og:title" content="Context Handoff: continue a long Claude chat in a fresh one">
+  <meta property="og:description" content="Export any claude.ai conversation as a compact resume prompt or Markdown file. Open source, no build step, 100% local.">
+  <meta property="og:url" content="https://__OWNER__.github.io/context-handoff/">
+  <meta property="og:image" content="https://__OWNER__.github.io/context-handoff/og-image.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Context Handoff: continue a long Claude chat in a fresh one">
+  <meta name="twitter:description" content="Export any claude.ai conversation as a compact resume prompt or Markdown file. Open source, 100% local.">
+  <meta name="twitter:image" content="https://__OWNER__.github.io/context-handoff/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://__OWNER__.github.io/context-handoff/#app",
+        "name": "Context Handoff",
+        "applicationCategory": "BrowserApplication",
+        "applicationSubCategory": "Chrome extension",
+        "operatingSystem": "Windows, macOS, Linux, ChromeOS",
+        "browserRequirements": "Chromium-based browser with Manifest V3 support (Chrome, Edge, Brave)",
+        "softwareVersion": "0.1.0",
+        "datePublished": "2026-11-25",
+        "license": "https://opensource.org/licenses/MIT",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "Chrome extension that converts a long claude.ai conversation into a compact handoff (task goal, latest version of each file, recent turns, next step) as an XML resume prompt or a Markdown file, so work can continue in a fresh chat or another AI assistant. All processing is local.",
+        "featureList": [
+          "Compact handoff: task goal, latest file versions, last N messages",
+          "Full transcript export",
+          "Copy XML resume prompt to clipboard",
+          "Download Markdown (.md) file",
+          "Code blocks, tables and KaTeX math preserved",
+          "Usage-limit notice highlight and reset reminder",
+          "No network requests, no analytics"
+        ],
+        "codeRepository": "https://github.com/__OWNER__/context-handoff",
+        "url": "https://__OWNER__.github.io/context-handoff/",
+        "image": "https://__OWNER__.github.io/context-handoff/og-image.png"
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to continue a long Claude chat in a new chat",
+        "step": [
+          { "@type": "HowToStep", "position": 1, "text": "Install Context Handoff and open the long chat on claude.ai." },
+          { "@type": "HowToStep", "position": 2, "text": "Click the Handoff button or press Alt+Shift+H." },
+          { "@type": "HowToStep", "position": 3, "text": "Choose Compact for coding tasks or Full transcript for research and writing, and optionally type the next step." },
+          { "@type": "HowToStep", "position": 4, "text": "Click Copy resume prompt and paste it into a new chat, or click Download .md and attach the file." }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "How do I export a Claude conversation to Markdown?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Install Context Handoff, open the chat on claude.ai, click Handoff, choose Full transcript and click Download .md. The file keeps every message, code blocks with language tags, tables and math." } },
+          { "@type": "Question", "name": "How do I continue a Claude chat in a new conversation without losing context?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use Compact mode and Copy resume prompt, then paste it into a new chat. The prompt carries the original goal, the current version of each file, the most recent messages and your next step." } },
+          { "@type": "Question", "name": "Does Context Handoff send my data anywhere?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. The extension has no network code. It builds the handoff in your browser and stores at most 20 recent handoffs locally in chrome.storage.local." } },
+          { "@type": "Question", "name": "Can I use the handoff with ChatGPT, Gemini or another assistant?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The resume prompt is plain text with simple XML tags that any capable chat model understands, and the Markdown file can be attached anywhere." } },
+          { "@type": "Question", "name": "Does it help get around usage limits?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. It does not manage accounts or change how any service counts usage. It makes your context smaller and portable so the usage you have goes further." } }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root { --bg:#fbfaf7; --fg:#2b2a27; --muted:#6f6b62; --card:#fff; --border:#e2ddd2; --accent:#c96442; --accent-fg:#fff; color-scheme: light dark; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#1f1e1b; --fg:#eeece6; --muted:#aaa59a; --card:#2b2a27; --border:#45433e; --accent:#d97757; --accent-fg:#1f1e1b; } }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    main, header, footer { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+    header { padding-top: 56px; text-align: center; }
+    header img { width: 80px; height: 80px; }
+    h1 { font-size: clamp(28px, 5vw, 42px); line-height: 1.2; margin: 16px 0 12px; }
+    .lede { font-size: 19px; color: var(--muted); max-width: 680px; margin: 0 auto; }
+    .cta { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:28px 0 8px; }
+    .btn { display:inline-block; padding:10px 18px; border-radius:10px; border:1px solid var(--border); color:var(--fg); text-decoration:none; font-weight:600; }
+    .btn.primary { background:var(--accent); color:var(--accent-fg); border-color:var(--accent); }
+    section { margin: 56px 0; }
+    h2 { font-size: 26px; margin: 0 0 14px; }
+    h3 { font-size: 18px; margin: 18px 0 6px; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:14px; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; }
+    .card h3 { margin-top:0; }
+    ol li { margin: 6px 0; }
+    pre { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:14px; overflow-x:auto; font-size:13px; line-height:1.5; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--border); vertical-align: top; }
+    details { border-bottom:1px solid var(--border); padding:10px 0; }
+    summary { cursor:pointer; font-weight:600; }
+    footer { color:var(--muted); font-size:14px; padding-bottom:40px; border-top:1px solid var(--border); padding-top:20px; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="icon128.png" alt="Context Handoff icon" width="80" height="80">
+    <h1>Continue a long Claude chat in a fresh one, without losing context</h1>
+    <p class="lede"><strong>Context Handoff</strong> is a free, open-source Chrome extension that turns a long claude.ai conversation into a compact handoff: the task goal, the latest version of every file, the last few messages and your next step. Copy it as a resume prompt or download it as Markdown.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/__OWNER__/context-handoff#install">Install from GitHub</a>
+      <a class="btn" href="https://github.com/__OWNER__/context-handoff">View source</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="what">
+      <h2>What is Context Handoff?</h2>
+      <p>Context Handoff is a Manifest V3 browser extension for Chrome, Edge and Brave. It reads the conversation open on claude.ai and exports it in one of two forms. A <strong>resume prompt</strong> is an XML-structured prompt you paste into a new chat. A <strong>Markdown file</strong> is something you attach or keep as notes. All processing happens in your browser. It makes no network requests and never reads cookies, sessions or credentials.</p>
+    </section>
+
+    <section id="why">
+      <h2>Why hand off instead of continuing?</h2>
+      <div class="grid">
+        <div class="card"><h3>Use fewer tokens</h3><p>Every message in a long chat re-sends the whole thread. A compact handoff is usually a small fraction of that size.</p></div>
+        <div class="card"><h3>Get better answers</h3><p>Models answer more reliably from a short, focused context than from 100 turns of old debugging.</p></div>
+        <div class="card"><h3>Take your work anywhere</h3><p>Continue in a new chat, on another device or browser profile, or in a different AI assistant.</p></div>
+        <div class="card"><h3>Keep a clean record</h3><p>The Markdown export keeps code blocks, tables and LaTeX math, so it reads well as project notes.</p></div>
+      </div>
+    </section>
+
+    <section id="how-to">
+      <h2>How to continue a long Claude chat in a new chat</h2>
+      <ol>
+        <li>Install Context Handoff and open the long chat on claude.ai.</li>
+        <li>Click the <strong>⇄ Handoff</strong> button, or press <kbd>Alt+Shift+H</kbd>.</li>
+        <li>Choose <strong>Compact</strong> for coding tasks or <strong>Full transcript</strong> for research and writing, and optionally type the next step.</li>
+        <li>Click <strong>Copy resume prompt</strong> and paste it into a new chat, or click <strong>Download .md</strong> and attach the file.</li>
+      </ol>
+    </section>
+
+    <section id="output">
+      <h2>What a compact handoff looks like</h2>
+      <pre><code>&lt;handoff mode="compact" source="TEC plotting script"&gt;
+&lt;instructions&gt;You are continuing a task that started in an earlier conversation...&lt;/instructions&gt;
+&lt;task_goal&gt;Write a Python script that loads TEC data from a CSV and plots it.&lt;/task_goal&gt;
+&lt;current_files&gt;
+  &lt;file name="analysis.py" language="python"&gt; ...latest version... &lt;/file&gt;
+&lt;/current_files&gt;
+&lt;note&gt;5 earlier message(s) were left out to save space.&lt;/note&gt;
+&lt;recent_conversation&gt; ...last 6 messages... &lt;/recent_conversation&gt;
+&lt;next_step&gt;Add a colorbar&lt;/next_step&gt;
+&lt;/handoff&gt;</code></pre>
+    </section>
+
+    <section id="features">
+      <h2>Features</h2>
+      <table>
+        <tr><th>Compact mode</th><td>Task goal, the latest version of each named file, and the last N messages (6 by default).</td></tr>
+        <tr><th>Full transcript</th><td>Every message verbatim, for research, writing and review threads.</td></tr>
+        <tr><th>Clean Markdown</th><td>Code blocks with language tags, tables, lists, links, blockquotes and KaTeX math.</td></tr>
+        <tr><th>Two exports</th><td>Copy an XML resume prompt, or download a <code>.md</code> file.</td></tr>
+        <tr><th>Limit notice</th><td>The button lights up when the usage-limit message appears, and an optional reminder fires when it resets.</td></tr>
+        <tr><th>Saved handoffs</th><td>The last 20 handoffs in the popup, stored only on your device.</td></tr>
+        <tr><th>Private</th><td>No network code, no analytics, no remote scripts. MIT licensed.</td></tr>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>Frequently asked questions</h2>
+      <details open><summary>How do I export a Claude conversation to Markdown?</summary>
+        <p>Install Context Handoff, open the chat on claude.ai, click Handoff, choose Full transcript and click Download .md. The file keeps every message, code blocks with language tags, tables and math.</p></details>
+      <details><summary>How do I continue a Claude chat in a new conversation without losing context?</summary>
+        <p>Use Compact mode and Copy resume prompt, then paste it into a new chat. The prompt carries the original goal, the current version of each file, the most recent messages and your next step.</p></details>
+      <details><summary>Does Context Handoff send my data anywhere?</summary>
+        <p>No. The extension has no network code. It builds the handoff in your browser and stores at most 20 recent handoffs locally in chrome.storage.local.</p></details>
+      <details><summary>Can I use the handoff with ChatGPT, Gemini or another assistant?</summary>
+        <p>Yes. The resume prompt is plain text with simple XML tags that any capable chat model understands, and the Markdown file can be attached anywhere.</p></details>
+      <details><summary>Does it help get around usage limits?</summary>
+        <p>No. It does not manage accounts or change how any service counts usage. It makes your context smaller and portable so the usage you have goes further.</p></details>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="https://github.com/__OWNER__/context-handoff">GitHub</a> · <a href="https://github.com/__OWNER__/context-handoff/blob/main/PRIVACY.md">Privacy policy</a> · MIT License</p>
+    <p>Context Handoff is an independent open-source project, not affiliated with or endorsed by Anthropic. "Claude" is a trademark of Anthropic, PBC, used here only to describe compatibility.</p>
+  </footer>
+</body>
+</html>

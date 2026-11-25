@@ -2,14 +2,36 @@
   "name": "context-handoff",
   "version": "0.1.0",
   "private": true,
-  "description": "Chrome MV3 extension that turns a long chat into a compact, structured handoff.",
+  "description": "Chrome extension that exports a long Claude chat as a compact resume prompt or Markdown file, so you can continue in a fresh chat. 100% local.",
   "type": "module",
   "scripts": {
     "test": "node test/run-tests.mjs",
-    "zip": "rm -f context-handoff.zip && zip -r context-handoff.zip manifest.json src icons -x '*.DS_Store'"
+    "zip": "git archive --format=zip -o context-handoff.zip HEAD manifest.json src icons",
+    "set-owner": "node scripts/set-owner.mjs",
+    "publish": "bash scripts/publish.sh"
   },
   "devDependencies": {
     "jsdom": "^25.0.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "chrome-extension",
+    "manifest-v3",
+    "claude",
+    "claude-ai",
+    "export-chat",
+    "markdown",
+    "context-window",
+    "prompt",
+    "ai-tools",
+    "productivity"
+  ],
+  "homepage": "https://__OWNER__.github.io/context-handoff/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/__OWNER__/context-handoff.git"
+  },
+  "bugs": {
+    "url": "https://github.com/__OWNER__/context-handoff/issues"
+  }
 }

@@ -3,14 +3,22 @@
   "name": "Context Handoff",
   "version": "0.1.0",
   "description": "Turn a long Claude chat into a compact, structured handoff you can resume from in a fresh chat or another assistant. Runs 100% locally.",
-  "permissions": ["storage", "alarms", "notifications"],
-  "host_permissions": ["https://claude.ai/*"],
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://claude.ai/*"
+  ],
   "background": {
     "service_worker": "src/background/service-worker.js"
   },
   "content_scripts": [
     {
-      "matches": ["https://claude.ai/*"],
+      "matches": [
+        "https://claude.ai/*"
+      ],
       "js": [
         "src/content/selectors.js",
         "src/content/limit.js",
@@ -38,8 +46,11 @@
   },
   "commands": {
     "open-handoff": {
-      "suggested_key": { "default": "Alt+Shift+H" },
+      "suggested_key": {
+        "default": "Alt+Shift+H"
+      },
       "description": "Open the handoff panel on claude.ai"
     }
-  }
+  },
+  "homepage_url": "https://github.com/__OWNER__/context-handoff"
 }

@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use or reference this software, please cite it as below."
+title: "Context Handoff: a browser extension for compact, structured AI chat handoffs"
+type: software
+authors:
+  - name: "Context Handoff contributors"
+repository-code: "https://github.com/__OWNER__/context-handoff"
+url: "https://__OWNER__.github.io/context-handoff/"
+abstract: >-
+  Context Handoff is an open-source Chrome Manifest V3 extension that converts a
+  long claude.ai conversation into a compact handoff (task goal, latest file
+  versions, recent turns, next step) as an XML resume prompt or a Markdown file,
+  so work can continue in a fresh chat or another AI assistant. All processing is local.
+keywords:
+  - chrome-extension
+  - manifest-v3
+  - claude
+  - context-window
+  - prompt-engineering
+  - markdown-export
+license: MIT
+version: 0.1.0
+date-released: "2026-11-25"

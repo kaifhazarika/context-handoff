@@ -1,115 +1,198 @@
-# Context Handoff
+<div align="center">
 
-A Chrome / Chromium (Manifest V3) extension that turns a long claude.ai conversation into a **compact, structured handoff**. Paste it into a fresh chat, or into a different assistant, and continue the task without re-explaining everything.
+<img src="icons/icon128.png" width="96" height="96" alt="Context Handoff extension icon">
 
-It runs entirely on your machine. It reads only the chat you have open, makes no network requests, and never touches cookies, sessions or credentials.
+# Context Handoff: export a Claude chat to a compact resume prompt or Markdown
 
-> Not affiliated with or endorsed by Anthropic. "Claude" is used only to describe the site the extension works on.
+**A free, open-source Chrome extension that turns a long claude.ai conversation into a compact, structured handoff, so you can continue the task in a fresh chat or another AI assistant without re-explaining everything.**
 
-## Why
+[![Tests](https://github.com/__OWNER__/context-handoff/actions/workflows/test.yml/badge.svg)](https://github.com/__OWNER__/context-handoff/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4)
+![No build step](https://img.shields.io/badge/build-none-lightgrey)
+![100% local](https://img.shields.io/badge/data-100%25%20local-brightgreen)
 
-Long chats get expensive. Every new message re-sends the whole thread, so late in a task most of your usage goes to dead-end debugging from an hour ago. A good handoff keeps only what matters: the goal, the current version of each file, the last few turns, and the next step. Starting a fresh chat from that handoff is usually cheaper and gives better answers.
+[Website](https://__OWNER__.github.io/context-handoff/) · [Install](#install) · [How it works](#how-it-works) · [FAQ](#faq) · [Privacy](PRIVACY.md)
+
+</div>
+
+---
+
+## What is Context Handoff?
+
+Context Handoff is a **Chrome, Edge and Brave extension (Manifest V3)** that reads the conversation open on claude.ai and exports it as either:
+
+- a **resume prompt**: an XML-structured prompt you paste into a new chat, or
+- a **Markdown file** (`.md`) you attach to a new chat or keep as notes.
+
+In its default **Compact** mode, the handoff keeps only what the next chat needs: the original task goal, the **latest version of every file**, the last few messages, and your next step. Earlier dead ends are left out. Everything runs locally in your browser. Nothing is uploaded, and the extension never reads cookies, sessions or credentials.
+
+## Why use a context handoff?
+
+Every message in a long AI chat re-sends the whole conversation, so late in a task most of the context goes to old debugging steps. A clean handoff:
+
+- **Saves tokens and usage.** A fresh chat that starts from a compact summary costs far less per message than a 100-turn thread.
+- **Improves answers.** Models answer better from a short, focused context than from a long, cluttered one.
+- **Makes work portable.** Continue in a new chat, on another device or browser profile, or in a different AI assistant.
+- **Keeps a record.** The Markdown export is a readable log of the decisions and code from the chat.
 
 ## Features
 
-- **Floating Handoff button** on claude.ai that follows the site's light/dark theme (rendered in a shadow root, so page styles can't break it).
-- **Usage-limit detection.** A lightweight `MutationObserver` watches for the limit notice, highlights the button, and offers to save a handoff while the chat is still open.
-- **Smart extraction.** Separates user and assistant turns, converts them to clean Markdown (code blocks, tables, lists, links, KaTeX math as `$...$`), and drops UI noise like copy buttons.
-- **Two modes:**
-  - **Compact (default):** the original task goal, the *latest* version of every named file from earlier in the chat, and the last N messages (6 by default).
-  - **Full transcript:** every message verbatim, for research or writing threads.
-- **Two exports:**
-  - **Copy resume prompt:** an XML-structured prompt on your clipboard.
-  - **Download `.md`:** a clean Markdown file you can attach to a new chat.
-- **Saved handoffs:** the last 20 handoffs are kept in the popup so you can copy or download them again.
-- **Reset reminder:** a desktop notification (`chrome.alarms`) when your limit should reset. It's set from the limit notice, which parses times like "3:00 PM" or "in 2 hours", or manually from the popup.
-- **Keyboard shortcut:** `Alt+Shift+H` toggles the panel. You can change it at `chrome://extensions/shortcuts`.
+| Feature | What it does |
+| --- | --- |
+| Floating **Handoff** button | Appears on claude.ai and follows the site's light/dark theme. `Alt+Shift+H` toggles it. |
+| **Compact mode** (default) | Keeps the task goal, the latest version of each named file, and the last N messages (6 by default). |
+| **Full transcript mode** | Exports every message verbatim, for research, writing and review threads. |
+| Clean **Markdown conversion** | Code blocks with language tags, tables, lists, links, blockquotes and **LaTeX/KaTeX math** (`$...$`, `$$...$$`). |
+| **Copy resume prompt** | XML-structured prompt with `<task_goal>`, `<current_files>`, `<recent_conversation>` and `<next_step>`. |
+| **Download `.md`** | A Markdown file you can attach to a new chat, which is usually tidier than a wall of pasted text. |
+| **Usage-limit notice** | When the limit message appears, the button lights up so you can save a handoff while the chat is still open. |
+| **Reset reminder** | A desktop notification when your usage limit should reset. |
+| **Saved handoffs** | The last 20 handoffs, kept in the popup. |
+| **Private by design** | No network requests, no analytics, no remote code. |
 
-## Install (no build step)
+## Install
 
-1. Clone or download this repo.
-2. Open `chrome://extensions` (or `brave://extensions`, `edge://extensions`).
+### From source (works today, no build step)
+
+1. Download this repository (**Code → Download ZIP**) and unzip it, or run:
+   ```bash
+   git clone https://github.com/__OWNER__/context-handoff.git
+   ```
+2. Open `chrome://extensions` (or `edge://extensions` / `brave://extensions`).
 3. Turn on **Developer mode** and click **Load unpacked**.
-4. Select the repo folder (the one containing `manifest.json`).
-5. Open a chat on claude.ai. The **⇄ Handoff** button appears at the bottom right.
+4. Select the folder that contains `manifest.json`.
+5. Open a chat on [claude.ai](https://claude.ai). The **⇄ Handoff** button appears at the bottom right.
 
-## Usage
+### From the Chrome Web Store
 
-1. In a long chat, click **⇄ Handoff**.
-2. Pick **Compact** or **Full transcript**, and optionally type the next step.
-3. Click **Copy resume prompt** and paste it into a new chat, or click **Download .md** and attach the file.
-4. The new chat restates the goal and the current state, then continues.
+Coming soon.
 
-### What a compact handoff looks like
+## How to continue a long Claude chat in a new chat
+
+1. In the long chat, click **⇄ Handoff** (or press `Alt+Shift+H`).
+2. Choose **Compact** (for coding and most tasks) or **Full transcript** (for research and writing).
+3. Optionally type the **next step**, e.g. *"Fix the overlapping axis labels, then add a colorbar."*
+4. Click **Copy resume prompt** and paste it into a new chat, or click **Download .md** and attach the file.
+5. The new chat restates the goal and the current state, then continues from the next step.
+
+## How it works
+
+```
+claude.ai page ──► extractor.js ──► [{ role, markdown, codeBlocks }]
+                                         │
+                       formatter.js ◄────┘  compact or full selection
+                           │
+             ┌─────────────┴─────────────┐
+       XML resume prompt           Markdown file
+        (clipboard)                  (download)
+```
+
+Compact mode works like this:
+
+1. The **first user message** becomes `<task_goal>`.
+2. The **last N messages** are kept verbatim in `<recent_conversation>`.
+3. From the messages in between, only the **latest version of each named file** is kept in `<current_files>`. A code block is "named" by a `# file: name.py` first line, or by a filename just before it.
+4. A `<note>` records what was left out, so the next model knows the context was trimmed.
+
+Example output:
 
 ```xml
 <handoff created="2026-11-25T17:16:27Z" mode="compact" source="TEC plotting script">
 <instructions>You are continuing a task that started in an earlier conversation...</instructions>
-<task_goal>Write a Python script that loads TEC data from a CSV...</task_goal>
+<task_goal>Write a Python script that loads TEC data from a CSV and plots it against time.</task_goal>
 <current_files>
-<file name="analysis.py" language="python"> ```python ... ``` </file>
+<file name="analysis.py" language="python">```python ... ```</file>
 </current_files>
 <note>5 earlier message(s) were left out to save space...</note>
 <recent_conversation>
-<turn role="user">...</turn>
-<turn role="assistant">...</turn>
+<turn role="user">Also add storm-time shading.</turn>
+<turn role="assistant">Updated plot_tec.py: ...</turn>
 </recent_conversation>
 <next_step>Add a colorbar</next_step>
 </handoff>
 ```
 
-## Permissions and privacy
+## FAQ
 
-| Permission | Why |
+### How do I export a Claude conversation to Markdown?
+Install Context Handoff, open the chat on claude.ai, click **⇄ Handoff**, choose **Full transcript**, and click **Download .md**. You get a Markdown file with every message, code blocks with language tags, tables and math.
+
+### How do I continue a Claude chat in a new conversation without losing context?
+Use **Compact** mode and **Copy resume prompt**, then paste it into a new chat. The prompt carries the original goal, the current version of each file, the most recent messages and your next step, and it tells the new chat to pick up where the old one stopped.
+
+### Does it save tokens?
+Usually, yes. A compact handoff of a long coding thread is often a small fraction of the full conversation's size. The panel shows an estimated token count before you copy.
+
+### Is my data sent anywhere?
+No. The extension has no network code. It reads the page you have open, builds the handoff in your browser, and stores at most 20 recent handoffs in `chrome.storage.local` on your device. See [PRIVACY.md](PRIVACY.md).
+
+### Does it read my cookies, session or login?
+No. It only reads the visible conversation text on claude.ai. It has no `cookies` permission and never touches credentials.
+
+### Can I use the handoff with ChatGPT, Gemini or another assistant?
+Yes. The resume prompt is plain text with simple XML tags, which any capable chat model understands. The Markdown export works anywhere you can attach or paste a file.
+
+### Does it work in Edge, Brave, Opera or Arc?
+Yes. It works in any Chromium-based browser that supports Manifest V3 extensions. A Firefox port is planned.
+
+### Does it capture Claude artifacts?
+Artifacts in the side panel aren't part of the chat text, so they aren't captured yet. Ask Claude to restate the file in the chat, or paste it into the handoff yourself.
+
+### Does it help get around usage limits?
+No, and it isn't designed to. It doesn't manage accounts or change how a service counts usage. It makes your context smaller and portable, so that the usage you have goes further.
+
+### The panel says "No messages found". What now?
+claude.ai has probably changed its page layout. Update the selectors in [`src/content/selectors.js`](src/content/selectors.js), or [open an issue](https://github.com/__OWNER__/context-handoff/issues/new?template=bug_report.yml) and include one message's HTML from DevTools.
+
+## Permissions
+
+| Permission | Why it's needed |
 | --- | --- |
-| `https://claude.ai/*` (content script) | Read the open conversation and show the button |
-| `storage` | Settings and the last 20 saved handoffs (`chrome.storage.local`, this profile only) |
-| `alarms`, `notifications` | The reset reminder |
-
-There's no remote code, no analytics and no `fetch`. Saved handoffs never leave the browser profile they were created in. To move a handoff somewhere else, use the clipboard or the `.md` file.
-
-## Project layout
-
-```
-manifest.json
-src/
-  content/
-    selectors.js     # claude.ai DOM selectors: edit this when the site changes
-    limit.js         # limit-notice detection + reset-time parsing
-    html-to-md.js    # dependency-free HTML -> Markdown
-    extractor.js     # DOM -> [{ role, markdown, codeBlocks }]
-    formatter.js     # messages -> { xml, markdown, stats }
-    ui.js            # button, panel, toast, clipboard/download, observers
-  background/service-worker.js   # reminder alarm, notification, shortcut
-  popup/                          # reminder, saved handoffs, settings
-icons/
-dev/harness.html     # try the extractor/formatter offline, no extension needed
-test/                # Node tests (jsdom) against a fixture conversation
-```
+| `https://claude.ai/*` | Read the open conversation and show the button |
+| `storage` | Settings and the last 20 saved handoffs (this browser profile only) |
+| `alarms`, `notifications` | The optional reset reminder |
 
 ## Development
 
 ```bash
-npm install        # dev-only: installs jsdom for the tests
-npm test           # runs test/run-tests.mjs
-npm run zip        # packages manifest.json, src/ and icons/ for the Chrome Web Store
+npm install   # dev-only: jsdom for tests
+npm test      # 14 tests against a fixture conversation
+npm run zip   # package for the Chrome Web Store
 ```
 
-- **Offline testing:** open `dev/harness.html` directly in Chrome to see the XML/Markdown output for the fixture conversation. Neither the extension nor claude.ai is needed.
-- **After editing the extension:** click the reload icon on `chrome://extensions`, then refresh the claude.ai tab.
-- **When claude.ai changes its markup:** if the panel says "No messages found", inspect a message in DevTools and update `src/content/selectors.js`. Then update `test/fixtures/conversation.js` to match and run `npm test`.
+- **Offline testing:** open [`dev/harness.html`](dev/harness.html) in Chrome to preview the XML/Markdown output without loading the extension.
+- **After editing:** reload the extension on `chrome://extensions`, then refresh the claude.ai tab.
 
-## Known limitations
+```
+src/content/selectors.js    claude.ai DOM selectors (edit when the site changes)
+src/content/html-to-md.js   dependency-free HTML -> Markdown (incl. KaTeX)
+src/content/extractor.js    DOM -> messages + code blocks + filenames
+src/content/formatter.js    messages -> XML prompt / Markdown / stats
+src/content/ui.js           button, panel, limit-notice watcher
+src/background/             reminder alarm, notification, shortcut
+src/popup/                  saved handoffs, reminder, settings
+docs/                       project website (GitHub Pages)
+```
 
-- **Artifacts** shown in the side panel aren't part of the message DOM, so they aren't captured. Ask Claude to restate the file in the chat, or copy it in yourself.
-- **File detection** is heuristic. It looks for a `# file: name.py` first line, or a filename just before the code block. Unnamed snippets from the middle of a chat are dropped in compact mode, and the handoff says how many.
-- **Token counts** are rough estimates (characters ÷ 4).
-- **Firefox** needs `background.scripts` instead of `service_worker`. A port is welcome.
+## Roadmap
+
+- [ ] Chrome Web Store release
+- [ ] Firefox port
+- [ ] Capture open artifacts
+- [ ] Custom handoff templates
+- [ ] Optional per-project handoff history
 
 ## Contributing
 
-Issues and PRs are welcome. Keep the zero-build, zero-dependency runtime, and add a fixture plus a test for any extraction change.
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md). Selector fixes after claude.ai layout changes are especially useful.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+[MIT](LICENSE). Free for personal and commercial use.
+
+---
+
+<sub>Context Handoff is an independent open-source project. It is not affiliated with, endorsed by, or sponsored by Anthropic. "Claude" is a trademark of Anthropic, PBC, and is used here only to describe compatibility.</sub>
+
+<!-- Keywords: export Claude chat, Claude conversation to Markdown, save Claude chat, continue Claude conversation in new chat, Claude context handoff, AI chat summary prompt, resume prompt, reduce tokens, long chat context, Chrome extension, Manifest V3 -->

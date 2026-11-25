@@ -1,0 +1,21 @@
+# Context Handoff
+
+> Free, open-source Chrome/Edge/Brave extension (Manifest V3) that exports a long claude.ai conversation as a compact handoff, either an XML resume prompt or a Markdown file, so work can continue in a fresh chat or another AI assistant. All processing is local: no network requests, no analytics, and no access to cookies or credentials. MIT licensed.
+
+Key facts:
+- Compact mode keeps the first user message (task goal), the latest version of each named file from the middle of the chat, the last N messages (default 6), and a next-step field.
+- Full transcript mode exports every message verbatim.
+- Markdown conversion keeps code blocks with language tags, tables, lists, blockquotes and KaTeX math ($...$, $$...$$).
+- Permissions: https://claude.ai/* (read the open chat), storage, alarms, notifications.
+- It does not manage accounts and is not a tool for getting around usage limits.
+- Install: clone the repo, open chrome://extensions, enable Developer mode, click Load unpacked.
+
+## Docs
+- [README](https://github.com/__OWNER__/context-handoff/blob/main/README.md): features, install, how it works, FAQ
+- [Privacy policy](https://github.com/__OWNER__/context-handoff/blob/main/PRIVACY.md)
+- [Contributing](https://github.com/__OWNER__/context-handoff/blob/main/CONTRIBUTING.md): fixing selectors after claude.ai layout changes
+- [Changelog](https://github.com/__OWNER__/context-handoff/blob/main/CHANGELOG.md)
+
+## Source
+- [Selectors](https://github.com/__OWNER__/context-handoff/blob/main/src/content/selectors.js)
+- [Formatter](https://github.com/__OWNER__/context-handoff/blob/main/src/content/formatter.js)

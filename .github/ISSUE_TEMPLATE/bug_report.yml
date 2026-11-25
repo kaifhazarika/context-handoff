@@ -1,0 +1,29 @@
+name: Bug report
+description: Something doesn't work (e.g. "No messages found" after a claude.ai update)
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what you saw instead.
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 131 on Windows 11
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Extension version
+      placeholder: 0.1.0
+  - type: textarea
+    id: html
+    attributes:
+      label: Message HTML (for extraction bugs)
+      description: Right-click a message → Inspect → copy the outer HTML of its container. Remove anything private.
+      render: html
