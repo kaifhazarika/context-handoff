@@ -1,0 +1,15 @@
+{
+  "name": "context-handoff",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chrome MV3 extension that turns a long chat into a compact, structured handoff.",
+  "type": "module",
+  "scripts": {
+    "test": "node test/run-tests.mjs",
+    "zip": "rm -f context-handoff.zip && zip -r context-handoff.zip manifest.json src icons -x '*.DS_Store'"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1"
+  },
+  "license": "MIT"
+}

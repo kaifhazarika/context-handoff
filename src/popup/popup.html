@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Context Handoff</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../../icons/icon48.png" alt="" width="24" height="24">
+    <h1>Context Handoff</h1>
+  </header>
+
+  <section>
+    <h2>Reset reminder</h2>
+    <p id="reminder-status" class="muted"></p>
+    <form id="reminder-form">
+      <div class="row">
+        In <input id="r-hours" type="number" min="0" max="48" value="5" aria-label="Hours"> h
+        <input id="r-mins" type="number" min="0" max="59" value="0" aria-label="Minutes"> min
+      </div>
+      <input id="r-label" type="text" maxlength="200" placeholder="What to resume (optional)">
+      <button type="submit" class="primary">Set reminder</button>
+    </form>
+    <button id="reminder-clear" hidden>Clear reminder</button>
+  </section>
+
+  <section>
+    <h2>Saved handoffs <button id="history-clear" class="link" hidden>Clear all</button></h2>
+    <ul id="history-list"></ul>
+    <p id="history-empty" class="muted">None yet. Use the Handoff button on claude.ai.</p>
+  </section>
+
+  <section>
+    <h2>Settings</h2>
+    <label>Default mode
+      <select id="s-mode">
+        <option value="compact">Compact</option>
+        <option value="full">Full transcript</option>
+      </select>
+    </label>
+    <label>Recent messages kept (compact)
+      <input id="s-recent" type="number" min="2" max="40">
+    </label>
+    <label class="check">
+      <input id="s-detect" type="checkbox">
+      Highlight the button when a usage-limit notice appears
+    </label>
+  </section>
+
+  <footer class="muted">Everything stays in this browser profile. Nothing is sent anywhere.</footer>
+  <script src="popup.js"></script>
+</body>
+</html>

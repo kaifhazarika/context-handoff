@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Context Handoff - dev harness</title>
+  <style>
+    body { font: 14px/1.5 system-ui, sans-serif; margin: 0; display: grid; grid-template-columns: 1fr 1fr; height: 100vh; }
+    #chat { overflow: auto; padding: 16px; border-right: 1px solid #ddd; }
+    #out { display: flex; flex-direction: column; padding: 16px; gap: 8px; }
+    textarea { flex: 1; font: 12px/1.4 ui-monospace, monospace; }
+    [data-testid="user-message"] { background: #f1efe8; padding: 8px; border-radius: 8px; margin: 8px 0; }
+    .font-claude-response { padding: 8px; }
+    .katex-html { display: none; }
+  </style>
+</head>
+<body>
+  <!-- Open this file directly in Chrome (no extension needed) to test the
+       extractor and formatter against the fixture conversation. -->
+  <div id="chat"></div>
+  <div id="out">
+    <div>
+      <label><input type="radio" name="mode" value="compact" checked> Compact</label>
+      <label><input type="radio" name="mode" value="full"> Full</label>
+      <label>Recent <input id="recent" type="number" value="4" min="2" max="40" style="width:50px"></label>
+      <label><input type="radio" name="fmt" value="xml" checked> XML prompt</label>
+      <label><input type="radio" name="fmt" value="md"> Markdown</label>
+    </div>
+    <div id="stats"></div>
+    <textarea id="result" readonly></textarea>
+  </div>
+
+  <script src="../test/fixtures/conversation.js"></script>
+  <script src="../src/content/selectors.js"></script>
+  <script src="../src/content/limit.js"></script>
+  <script src="../src/content/html-to-md.js"></script>
+  <script src="../src/content/extractor.js"></script>
+  <script src="../src/content/formatter.js"></script>
+  <script>
+    document.getElementById('chat').innerHTML = FIXTURE_HTML;
+    function render() {
+      const mode = document.querySelector('input[name=mode]:checked').value;
+      const fmt = document.querySelector('input[name=fmt]:checked').value;
+      const messages = CHX.extractMessages(document.getElementById('chat'));
+      const h = CHX.buildHandoff(messages, {
+        mode, recentCount: Number(document.getElementById('recent').value), title: 'Fixture chat',
+      });
+      document.getElementById('stats').textContent = JSON.stringify(h.stats);
+      document.getElementById('result').value = fmt === 'xml' ? h.xml : h.markdown;
+    }
+    document.getElementById('out').addEventListener('change', render);
+    render();
+  </script>
+</body>
+</html>
