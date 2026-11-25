@@ -4,8 +4,8 @@ title: "Context Handoff: a browser extension for compact, structured AI chat han
 type: software
 authors:
   - name: "Context Handoff contributors"
-repository-code: "https://github.com/__OWNER__/context-handoff"
-url: "https://__OWNER__.github.io/context-handoff/"
+repository-code: "https://github.com/kaifhazarika/context-handoff"
+url: "https://kaifhazarika.github.io/context-handoff/"
 abstract: >-
   Context Handoff is an open-source Chrome Manifest V3 extension that converts a
   long claude.ai conversation into a compact handoff (task goal, latest file

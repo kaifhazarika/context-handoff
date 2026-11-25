@@ -26,12 +26,12 @@
     "ai-tools",
     "productivity"
   ],
-  "homepage": "https://__OWNER__.github.io/context-handoff/",
+  "homepage": "https://kaifhazarika.github.io/context-handoff/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/__OWNER__/context-handoff.git"
+    "url": "git+https://github.com/kaifhazarika/context-handoff.git"
   },
   "bugs": {
-    "url": "https://github.com/__OWNER__/context-handoff/issues"
+    "url": "https://github.com/kaifhazarika/context-handoff/issues"
   }
 }

@@ -47,4 +47,4 @@ Any change to this policy will be published in this file and noted in [CHANGELOG
 
 ## Contact
 
-Open an issue at https://github.com/__OWNER__/context-handoff/issues.
+Open an issue at https://github.com/kaifhazarika/context-handoff/issues.

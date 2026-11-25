@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://__OWNER__.github.io/context-handoff/sitemap.xml
+Sitemap: https://kaifhazarika.github.io/context-handoff/sitemap.xml

@@ -6,13 +6,13 @@
 
 **A free, open-source Chrome extension that turns a long claude.ai conversation into a compact, structured handoff, so you can continue the task in a fresh chat or another AI assistant without re-explaining everything.**
 
-[![Tests](https://github.com/__OWNER__/context-handoff/actions/workflows/test.yml/badge.svg)](https://github.com/__OWNER__/context-handoff/actions/workflows/test.yml)
+[![Tests](https://github.com/kaifhazarika/context-handoff/actions/workflows/test.yml/badge.svg)](https://github.com/kaifhazarika/context-handoff/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4)
 ![No build step](https://img.shields.io/badge/build-none-lightgrey)
 ![100% local](https://img.shields.io/badge/data-100%25%20local-brightgreen)
 
-[Website](https://__OWNER__.github.io/context-handoff/) · [Install](#install) · [How it works](#how-it-works) · [FAQ](#faq) · [Privacy](PRIVACY.md)
+[Website](https://kaifhazarika.github.io/context-handoff/) · [Install](#install) · [How it works](#how-it-works) · [FAQ](#faq) · [Privacy](PRIVACY.md)
 
 </div>
 
@@ -57,7 +57,7 @@ Every message in a long AI chat re-sends the whole conversation, so late in a ta
 
 1. Download this repository (**Code → Download ZIP**) and unzip it, or run:
    ```bash
-   git clone https://github.com/__OWNER__/context-handoff.git
+   git clone https://github.com/kaifhazarika/context-handoff.git
    ```
 2. Open `chrome://extensions` (or `edge://extensions` / `brave://extensions`).
 3. Turn on **Developer mode** and click **Load unpacked**.
@@ -143,7 +143,7 @@ Artifacts in the side panel aren't part of the chat text, so they aren't capture
 No, and it isn't designed to. It doesn't manage accounts or change how a service counts usage. It makes your context smaller and portable, so that the usage you have goes further.
 
 ### The panel says "No messages found". What now?
-claude.ai has probably changed its page layout. Update the selectors in [`src/content/selectors.js`](src/content/selectors.js), or [open an issue](https://github.com/__OWNER__/context-handoff/issues/new?template=bug_report.yml) and include one message's HTML from DevTools.
+claude.ai has probably changed its page layout. Update the selectors in [`src/content/selectors.js`](src/content/selectors.js), or [open an issue](https://github.com/kaifhazarika/context-handoff/issues/new?template=bug_report.yml) and include one message's HTML from DevTools.
 
 ## Permissions
 

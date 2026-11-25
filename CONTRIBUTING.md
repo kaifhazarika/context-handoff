@@ -9,7 +9,7 @@ Thanks for helping. A few ground rules keep the project easy to work on:
 ## Setup
 
 ```bash
-git clone https://github.com/__OWNER__/context-handoff.git
+git clone https://github.com/kaifhazarika/context-handoff.git
 cd context-handoff
 npm install
 npm test
